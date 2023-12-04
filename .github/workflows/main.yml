@@ -1,29 +1,28 @@
 name: CI
 
 on:
-  pull_request:
+  push:
     branches: [ "develop" ]
 
 jobs:
-  build:
-    runs-on: ubuntu-22.04 
+  deploy-ci:
+    runs-on: ubuntu-22.04
     env:
-      working-directory: 'sixseminar'
+      working-directory: sixseminar
 
     steps: 
-    - name: 체크아웃
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
     - name: Set up JDK 17
       uses: actions/setup-java@v3
-	      with:
+      with:
         distribution: 'corretto'
         java-version: '17'
 
     - name: application.yaml 생성
       run: | 
           cd src/main/resources
-          echo "${{ secrets.APPLICATION }}" > ./application.yaml
+          echo "${{ secrets.APPLICATION }}" > ./application-deploy.yaml
       working-directory: ${{ env.working-directory }}
 
     - name: 빌드
