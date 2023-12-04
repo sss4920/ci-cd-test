@@ -22,6 +22,8 @@ jobs:
     - name: application.yaml 생성
       run: | 
           cd src/main/resources
+          # application.yml 파일 생성
+          touch ./application-deploy.yaml
           echo "${{ secrets.APPLICATION }}" > ./application-deploy.yaml
       working-directory: ${{ env.working-directory }}
 
